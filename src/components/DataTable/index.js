@@ -1,75 +1,38 @@
-import React from 'react';
-//import { useState } from 'react';
+import React, { useEffect } from 'react';
+import { useState } from 'react';
 
-// const [data, setData] = useState([]);
-// const [loading, setLoading] = useState(false);
 
-let data = []
+export const DataTable = (props) => {
+  const initialState = {
+    data: [],
+    loading: false,
+  };
 
-const url = process.env.REACT_APP_FETCH_URL_SMALL;
+  const [state, setState] = useState(initialState);
 
-const fetchData = async (url) => {
-  console.log(url)
-  const response = await fetch(url);
-  console.log(response)
+  const url = process.env.REACT_APP_FETCH_URL_SMALL;
 
-  if (response.ok) {
-    data = await response.json();
-  } else {
-    throw new Error(
-      `Error while data fetching. Server response:${response.status}`
-      )
-  }
-};
+  const fetchData = async () => {
+    const response = await fetch(url);
+    setState(oldState => ({...oldState, loading: true}));
+  
+    if (response.ok) {
+      const json = await response.json();
+      setTimeout(() => {
+        setState(oldState => ({...oldState, data: json, loading: false}));
+      }, 2000 )
+      // setState(oldState => ({...oldState, data: json, loading: false}));
+    } else {
+      throw new Error(
+        `Error while data fetching. Server response:${response.status}`
+        );
+    };
+  };
 
-export const DataTable = () => {
-
-  fetchData(url);
-
-  // const data = [
-  //   {
-  //     id: 101,
-  //     firstName: 'Sue',
-  //     lastName: 'Corson',
-  //     email: 'DWhalley@in.gov',
-  //     phone: '(612)211-6296',
-  //     address: {
-  //       streetAddress: '9792 Mattis Ct',
-  //       city: 'Waukesha',
-  //       state: 'WI',
-  //       zip: '22178'
-  //     },
-  //     description: 'et lacus magna dolor...',
-  //   },
-  //   {
-  //     id: 102,
-  //     firstName: 'Sue',
-  //     lastName: 'Corson',
-  //     email: 'DWhalley@in.gov',
-  //     phone: '(612)211-6296',
-  //     address: {
-  //       streetAddress: '9792 Mattis Ct',
-  //       city: 'Waukesha',
-  //       state: 'WI',
-  //       zip: '22178'
-  //     },
-  //     description: 'et lacus magna dolor...',
-  //   },
-  //   {
-  //     id: 103,
-  //     firstName: 'Sue',
-  //     lastName: 'Corson',
-  //     email: 'DWhalley@in.gov',
-  //     phone: '(612)211-6296',
-  //     address: {
-  //       streetAddress: '9792 Mattis Ct',
-  //       city: 'Waukesha',
-  //       state: 'WI',
-  //       zip: '22178'
-  //     },
-  //     description: 'et lacus magna dolor...',
-  //   }
-  // ]
+  useEffect(() => {
+    fetchData()
+    // eslint-disable-next-line
+  }, [props])
 
   return (
     <table>
@@ -84,7 +47,7 @@ export const DataTable = () => {
       </thead>
       <tbody>
         {
-          data.map((e, index) => (
+          !state.loading ? state.data.map((e, index) => (
               <tr key={index}>
                 <td>{e.id}</td>
                 <td>{e.firstName}</td>
@@ -92,7 +55,7 @@ export const DataTable = () => {
                 <td>{e.email}</td>
                 <td>{e.phone}</td>
               </tr>
-            ))
+            )) : <tr><td>loading...</td></tr>
         }
       </tbody>
     </table>
