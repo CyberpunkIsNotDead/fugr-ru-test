@@ -1,28 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { DataTable } from '../../components/DataTable';
+import { sortData } from './dataManager';
 
 export const MainPage = (props) => {
 
-  const initialState = {
+  const initialdataState = {
     data: [],
     loading: false,
   };
   
-  const [state, setState] = useState(initialState);
+  const [dataState, setDataState] = useState(initialdataState);
   
   const url = process.env.REACT_APP_FETCH_URL_SMALL;
   
   const fetchData = async () => {
     const response = await fetch(url);
-    setState(oldState => ({...oldState, loading: true}));
+    setDataState(oldDataState => ({...oldDataState, loading: true}));
   
     if (response.ok) {
       const json = await response.json();
       setTimeout(() => {
-        setState(oldState => ({...oldState, data: json, loading: false}));
+        setDataState(oldDataState => ({...oldDataState, data: json, loading: false}));
       }, 2000 )
-      // setState(oldState => ({...oldState, data: json, loading: false}));
+      // setDataState(oldDataState => ({...oldDataState, data: json, loading: false}));
     } else {
       throw new Error(
         `Error while data fetching. Server response:${response.status}`
@@ -30,10 +31,21 @@ export const MainPage = (props) => {
     };
   };
 
+  const sortById = () => {
+    setDataState(oldDataState => {
+      const sortedData = sortData(oldDataState.data);
+      return {...oldDataState, data: sortedData};
+    })
+  };
+
   useEffect(() => {
-    fetchData()
+    fetchData();
     // eslint-disable-next-line
-  }, [])
+  }, []);
+
+  // useEffect(() => {
+  //   console.log('sorted', dataState.data)
+  // }, [dataState.data])
 
   return (
     <>
@@ -44,7 +56,8 @@ export const MainPage = (props) => {
           <li><Link to='/page/3'>3</Link></li>
         </ul>
       </div>
-      <DataTable currentPage={props.match.params.page} state={state}/>
+      <button onClick={() => {sortById()}}>sortById</button>
+      <DataTable currentPage={props.match.params.page} data={dataState.data} loading={dataState.loading}/>
       <div>
         {
           props.match.params.page ? props.match.params.page : 'none'

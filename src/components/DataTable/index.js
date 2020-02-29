@@ -14,7 +14,7 @@ export const DataTable = (props) => (
     </thead>
     <tbody>
       {
-        !props.state.loading ? props.state.data.map((e, index) => (
+        !props.loading ? props.data.map((e, index) => (
             <tr key={index}>
               <td>{e.id}</td>
               <td>{e.firstName}</td>
