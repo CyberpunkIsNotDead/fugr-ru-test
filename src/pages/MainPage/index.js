@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { DataTable } from '../../components/DataTable';
 import { sortData } from './dataManager';
@@ -6,7 +6,7 @@ import { sortData } from './dataManager';
 export const MainPage = (props) => {
 
   const initialdataState = {
-    data: [],
+    data: null,
     loading: false,
   };
   
@@ -43,9 +43,25 @@ export const MainPage = (props) => {
     // eslint-disable-next-line
   }, []);
 
-  // useEffect(() => {
-  //   console.log('sorted', dataState.data)
-  // }, [dataState.data])
+  const checkIfDataExists = () => (
+    dataState.data !== null ? (
+      <Fragment>
+        <button onClick={() => {sortById()}}>sortById</button>
+        <DataTable
+          currentPage={props.match.params.page}
+          data={dataState.data}
+          // sortBy={sortById}
+        />
+      </Fragment>
+    ) :
+    null
+  );
+
+  const checkIfLoading = () => (
+    dataState.loading ?
+    <div>loading...</div> :
+    checkIfDataExists()
+  );
 
   return (
     <>
@@ -56,8 +72,9 @@ export const MainPage = (props) => {
           <li><Link to='/page/3'>3</Link></li>
         </ul>
       </div>
-      <button onClick={() => {sortById()}}>sortById</button>
-      <DataTable currentPage={props.match.params.page} data={dataState.data} loading={dataState.loading}/>
+      {
+        checkIfLoading()
+      }
       <div>
         {
           props.match.params.page ? props.match.params.page : 'none'
