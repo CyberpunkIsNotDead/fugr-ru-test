@@ -24,14 +24,10 @@ export const sortByField = (data, field) => {
     case 'id':
       return data.sort((first, second) => first.id - second.id);
     default:
-      return data.sort((first, second) => {
-        if (first[field] > second[field]) {
-          return 1
-        };
-        if (first[field] < second[field]) {
-          return -1
-        };
-        return 0
-      });
+      return data.sort((first, second) => first[field] > second[field]
+        ? 1
+        : first[field] < second[field]
+          ? -1
+          : 0);
   };
 };

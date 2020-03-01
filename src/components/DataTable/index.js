@@ -9,54 +9,39 @@ export const DataTable = (props) => {
     sortByField,
   } = useContext(DataContext);
 
+  const sortData = (field) => {
+    dispatch({
+      type: SORT_ENTRIES,
+      payload: sortByField(dataState.data, field)
+    });
+  };
+
+  // implement function that creates table elements by fields array
+  // this.parentNode.children[0].textContent - use refs, probably
+
   return (
     <table>
       <thead>
         <tr>
           <th>
             <span>id</span>
-            <button onClick={() => {
-              dispatch({
-                type: SORT_ENTRIES,
-                payload: sortByField(dataState.data, 'id')
-              })
-            }}>sort</button>
+            <button onClick={() => {sortData('id')}}>sort</button>
           </th>
           <th>
             <span>firstName</span>
-            <button onClick={() => {
-              dispatch({
-                type: SORT_ENTRIES,
-                payload: sortByField(dataState.data, 'firstName')
-              })
-            }}>sort</button>
+            <button onClick={() => {sortData('firstName')}}>sort</button>
           </th>
           <th>
             <span>lastName</span>
-            <button onClick={() => {
-              dispatch({
-                type: SORT_ENTRIES,
-                payload: sortByField(dataState.data, 'lastName')
-              })
-            }}>sort</button>
+            <button onClick={() => {sortData('lastName')}}>sort</button>
           </th>
-          <th>email
+          <th>
             <span>email</span>
-            <button onClick={() => {
-              dispatch({
-                type: SORT_ENTRIES,
-                payload: sortByField(dataState.data, 'email')
-              })
-            }}>sort</button>
+            <button onClick={() => {sortData('email')}}>sort</button>
           </th>
           <th>
             <span>phone</span>
-            <button onClick={() => {
-              dispatch({
-                type: SORT_ENTRIES,
-                payload: sortByField(dataState.data, 'phone')
-              })
-            }}>sort</button>
+            <button onClick={() => {sortData('phone')}}>sort</button>
           </th>
         </tr>
       </thead>
