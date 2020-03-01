@@ -23,17 +23,15 @@ export const sortByField = (data, field) => {
   switch (field) {
     case 'id':
       return data.sort((first, second) => first.id - second.id);
-    case !'id':
+    default:
       return data.sort((first, second) => {
-        if (first.field > second.field) {
-          return -1
-        };
-        if (first.field < second.field) {
+        if (first[field] > second[field]) {
           return 1
+        };
+        if (first[field] < second[field]) {
+          return -1
         };
         return 0
       });
-    default:
-      return data.sort((first, second) => first.id - second.id);
   };
 };

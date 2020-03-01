@@ -1,12 +1,14 @@
 import React, { useEffect, Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { DataTable } from '../../components/DataTable';
-import { sortDataById } from './dataManager';
-import { Context } from '../../DataStateContext';
-import { START_FETCHING, FETCH_ENTRIES, SORT_ENTRIES } from '../../DataStateContext/actionTypes';
+import { DataContext } from '../../DataContextWrapper';
+import { START_FETCHING, FETCH_ENTRIES } from '../../DataContextWrapper/actionTypes';
 
 export const MainPage = (props) => {
-  const [dataState, dispatch] = useContext(Context);
+  const {
+    dataState,
+    dispatch,
+  } = useContext(DataContext);
   
   const url = process.env.REACT_APP_FETCH_URL_SMALL;
 
@@ -26,12 +28,6 @@ export const MainPage = (props) => {
     };
   };
 
-  const sortById = () => {
-      const sortedData = sortDataById(dataState.data);
-      console.log(sortedData, '1');
-      dispatch({type: SORT_ENTRIES, payload: sortedData});
-  };
-
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line
@@ -41,7 +37,6 @@ export const MainPage = (props) => {
     dataState.data !== null
     ? (
       <Fragment>
-        <button onClick={() => {sortById()}}>sortById</button>
         <DataTable
           currentPage={props.match.params.page}
           data={dataState.data}
