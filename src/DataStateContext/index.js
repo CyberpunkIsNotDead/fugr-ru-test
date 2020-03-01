@@ -1,48 +1,22 @@
-// import React, { createContext, useState } from 'react';
+import React, { createContext, useReducer } from 'react';
+import { reducer } from './reducer';
+// import { limitData, sortDataById, sortByField } from '../pages/MainPage/dataManager';
 
-// export const DataTableContext = createContext();
+const initialDataState = {
+  data: null,
+  loading: false,
+};
 
-// export const DataStateContext = (child) => {
-//   const initialdataState = {
-//     data: null,
-//     loading: false,
-//   };
-  
-//   const [dataState, setDataState] = useState(initialdataState);
+export const Context = createContext(initialDataState);
 
-//   const fetchData = async (url) => {
-//     const response = await fetch(url);
-  
-//     if (response.ok) {
-//       return await response.json();
-//     } else {
-//       throw new Error(
-//         `Error while data fetching. Server response:${response.status}`
-//         );
-//     };
-//   };
-  
-//   const limitData = (data, currentPage, limitNumber) => {
-//     const limit = currentPage * limitNumber;
-//     const offset = limit - limitNumber;
-  
-//     return data.slice(offset, limit)
-//   };
-  
-//   const sortData = data => data.sort((first, second) => first.id - second.id);
-  
+export const DataStateContext = ({children}) => {
+  const [dataState, dispatch] = useReducer(reducer, initialDataState);
 
-//   return (
-//     <DataTableContext.Provider
-//       value={{
-//         dataState,
-//         setDataState,
-//         fetchData,
-//         limitData,
-//         sortData
-//       }}
-//     >
-//       { child }
-//     </DataTableContext.Provider>
-//   );
-// };
+  return (
+    <Context.Provider
+      value={[dataState, dispatch]}
+    >
+      {children}
+    </Context.Provider>
+  );
+};

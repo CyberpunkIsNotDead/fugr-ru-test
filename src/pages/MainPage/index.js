@@ -1,29 +1,24 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useEffect, Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { DataTable } from '../../components/DataTable';
-import { sortData } from './dataManager';
+import { sortDataById } from './dataManager';
+import { Context } from '../../DataStateContext';
+import { START_FETCHING, FETCH_ENTRIES, SORT_ENTRIES } from '../../DataStateContext/actionTypes';
 
 export const MainPage = (props) => {
-
-  const initialdataState = {
-    data: null,
-    loading: false,
-  };
-  
-  const [dataState, setDataState] = useState(initialdataState);
+  const [dataState, dispatch] = useContext(Context);
   
   const url = process.env.REACT_APP_FETCH_URL_SMALL;
-  
+
   const fetchData = async () => {
     const response = await fetch(url);
-    setDataState(oldDataState => ({...oldDataState, loading: true}));
+    dispatch({type: START_FETCHING});
   
     if (response.ok) {
       const json = await response.json();
       setTimeout(() => {
-        setDataState(oldDataState => ({...oldDataState, data: json, loading: false}));
-      }, 2000 )
-      // setDataState(oldDataState => ({...oldDataState, data: json, loading: false}));
+        dispatch({type: FETCH_ENTRIES, payload: json});
+      }, 2000 );
     } else {
       throw new Error(
         `Error while data fetching. Server response:${response.status}`
@@ -32,10 +27,9 @@ export const MainPage = (props) => {
   };
 
   const sortById = () => {
-    setDataState(oldDataState => {
-      const sortedData = sortData(oldDataState.data);
-      return {...oldDataState, data: sortedData};
-    })
+      const sortedData = sortDataById(dataState.data);
+      console.log(sortedData, '1');
+      dispatch({type: SORT_ENTRIES, payload: sortedData});
   };
 
   useEffect(() => {
@@ -44,23 +38,22 @@ export const MainPage = (props) => {
   }, []);
 
   const checkIfDataExists = () => (
-    dataState.data !== null ? (
+    dataState.data !== null
+    ? (
       <Fragment>
         <button onClick={() => {sortById()}}>sortById</button>
         <DataTable
           currentPage={props.match.params.page}
           data={dataState.data}
-          // sortBy={sortById}
         />
       </Fragment>
-    ) :
-    null
+    ) : null
   );
 
   const checkIfLoading = () => (
-    dataState.loading ?
-    <div>loading...</div> :
-    checkIfDataExists()
+    dataState.loading
+    ? <div>loading...</div>
+    : checkIfDataExists()
   );
 
   return (
