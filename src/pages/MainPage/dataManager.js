@@ -19,15 +19,9 @@ export const limitData = (data, currentPage, limitNumber) => {
 
 export const sortDataById = data => data.sort((first, second) => first.id - second.id);
 
-export const sortByField = (data, field) => {
-  switch (field) {
-    case 'id':
-      return data.sort((first, second) => first.id - second.id);
-    default:
-      return data.sort((first, second) => first[field] > second[field]
+export const sortByField = (data, field) => (
+  data.sort((first, second) => first[field] > second[field]
         ? 1
         : first[field] < second[field]
           ? -1
-          : 0);
-  };
-};
+          : 0));
