@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import { DataContext } from '../../DataContextWrapper';
 import { SORT_ENTRIES } from '../../DataContextWrapper/actionTypes';
-import CONFIG from '../../config';
 
-export const DataTable = () => {
+export const DataTable = (props) => {
+
   const {
     dataState,
     dispatch,
+    CONFIG: {DATA_FIELDS}
   } = useContext(DataContext);
 
   const sortData = (field) => {
@@ -15,8 +16,6 @@ export const DataTable = () => {
       field: field,
     });
   };
-
-  const DATA_FIELDS = CONFIG.DATA_FIELDS;
 
   const tableHead = () => (
     DATA_FIELDS.map((field, index) => (
@@ -32,7 +31,7 @@ export const DataTable = () => {
   );
 
   const tableRows = () => (
-    dataState.data.map((e, index) => (
+    props.data.map((e, index) => (
         <tr key={index}>
           {
             DATA_FIELDS.map((field, index) => (

@@ -1,6 +1,8 @@
 import React, { createContext, useReducer } from 'react';
 import { reducer } from './reducer';
 import { limitData, sortByField } from './dataManager';
+import CONFIG from '../config';
+
 
 const initialDataState = {
   data: null,
@@ -20,6 +22,7 @@ export const DataContextWrapper = ({children}) => {
         dispatch,
         limitData,
         sortByField,
+        CONFIG,
       }}
     >
       {children}

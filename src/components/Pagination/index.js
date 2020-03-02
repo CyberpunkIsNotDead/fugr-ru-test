@@ -1,15 +1,19 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-// import getCurrentPage from './getCurrentPage';
 import getPagesCount from './getPagesCount';
 import { DataContext } from '../../DataContextWrapper';
 
 export const Pagination = (props) => {
 
-  const { dataState: {data} } = useContext(DataContext);
+  // TODO: fix data slicing in last page, rewrite dirty code
+
+  const {
+    dataState: {data},
+    CONFIG: {PAGE_ENTRIES_LIMIT}
+  } = useContext(DataContext);
 
   const currentPage = props.currentPage;
-  const pagesCount = getPagesCount(data);
+  const pagesCount = getPagesCount(data, PAGE_ENTRIES_LIMIT);
 
   const createPagination = () => {
     let pages = [];

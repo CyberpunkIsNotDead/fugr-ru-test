@@ -9,10 +9,10 @@ const isDataExist = data => data !== null
   ? true
   : false;
 
-const pagesCount = data => isDataExist(data)
-  ? Math.floor(data.length / 4)
+const pagesCount = (data, pageLimit) => isDataExist(data)
+  ? Math.floor(data.length / pageLimit)
   : 1;
 
-const getPagesCount = data => pagesCount(data);
+const getPagesCount = (data, pageLimit) => pagesCount(data, pageLimit);
 
 export default getPagesCount;
