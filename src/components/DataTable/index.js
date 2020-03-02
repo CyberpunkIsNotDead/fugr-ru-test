@@ -1,36 +1,32 @@
 import React, { useContext } from 'react';
 import { DataContext } from '../../DataContextWrapper';
 import { SORT_ENTRIES } from '../../DataContextWrapper/actionTypes';
+import CONFIG from '../../config';
 
 export const DataTable = () => {
   const {
     dataState,
     dispatch,
-    sortByField,
   } = useContext(DataContext);
 
   const sortData = (field) => {
     dispatch({
       type: SORT_ENTRIES,
-      payload: sortByField(dataState.data, field)
+      field: field,
     });
   };
 
-  // data fields in context
-
-  const DATA_FIELDS = [
-    'id',
-    'firstName',
-    'lastName',
-    'email',
-    'phone',
-  ];
+  const DATA_FIELDS = CONFIG.DATA_FIELDS;
 
   const tableHead = () => (
     DATA_FIELDS.map((field, index) => (
-      <th key={index}>
+      <th key={index} onClick={() => {sortData(field)}}>
         <span>{field}</span>
-        <button onClick={() => {sortData(field)}}>sort</button>
+        <span>{
+          dataState.ascendingOrder
+          ? '▲'
+          : '▼'
+        }</span>
       </th>
     ))
   );

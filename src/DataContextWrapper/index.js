@@ -5,6 +5,7 @@ import { limitData, sortByField } from './dataManager';
 const initialDataState = {
   data: null,
   loading: false,
+  ascendingOrder: true,
 };
 
 export const DataContext = createContext(initialDataState);
