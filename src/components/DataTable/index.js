@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { DataContext } from '../../DataContextWrapper';
 import { SORT_ENTRIES } from '../../DataContextWrapper/actionTypes';
 
-export const DataTable = (props) => {
+export const DataTable = () => {
   const {
     dataState,
     dispatch,
@@ -16,47 +16,47 @@ export const DataTable = (props) => {
     });
   };
 
-  // implement function that creates table elements by fields array
-  // this.parentNode.children[0].textContent - use refs, probably
+  // data fields in context
+
+  const DATA_FIELDS = [
+    'id',
+    'firstName',
+    'lastName',
+    'email',
+    'phone',
+  ];
+
+  const tableHead = () => (
+    DATA_FIELDS.map((field, index) => (
+      <th key={index}>
+        <span>{field}</span>
+        <button onClick={() => {sortData(field)}}>sort</button>
+      </th>
+    ))
+  );
+
+  const tableRows = () => (
+    dataState.data.map((e, index) => (
+        <tr key={index}>
+          {
+            DATA_FIELDS.map((field, index) => (
+              <td key={index}>{e[field]}</td>
+            ))
+          }
+        </tr>
+      )
+    )
+  );
 
   return (
     <table>
       <thead>
         <tr>
-          <th>
-            <span>id</span>
-            <button onClick={() => {sortData('id')}}>sort</button>
-          </th>
-          <th>
-            <span>firstName</span>
-            <button onClick={() => {sortData('firstName')}}>sort</button>
-          </th>
-          <th>
-            <span>lastName</span>
-            <button onClick={() => {sortData('lastName')}}>sort</button>
-          </th>
-          <th>
-            <span>email</span>
-            <button onClick={() => {sortData('email')}}>sort</button>
-          </th>
-          <th>
-            <span>phone</span>
-            <button onClick={() => {sortData('phone')}}>sort</button>
-          </th>
+          { tableHead() }
         </tr>
       </thead>
       <tbody>
-        {
-          props.data.map((e, index) => (
-            <tr key={index}>
-              <td>{e.id}</td>
-              <td>{e.firstName}</td>
-              <td>{e.lastName}</td>
-              <td>{e.email}</td>
-              <td>{e.phone}</td>
-            </tr>
-          ))
-        }
+        { tableRows() }
       </tbody>
     </table>
   );

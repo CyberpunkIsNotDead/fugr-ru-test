@@ -28,8 +28,14 @@ export const MainPage = (props) => {
     };
   };
 
+  // const fakeFetchData = async (data) => {
+  //   setTimeout(dispatch({type: START_FETCHING}), 100);
+  //   setTimeout(dispatch({type: FETCH_ENTRIES, payload: data}), 2000);
+  // };
+
   useEffect(() => {
     fetchData();
+    // fakeFetchData(data);
     // eslint-disable-next-line
   }, []);
 

@@ -17,8 +17,6 @@ export const limitData = (data, currentPage, limitNumber) => {
   return data.slice(offset, limit)
 };
 
-export const sortDataById = data => data.sort((first, second) => first.id - second.id);
-
 export const sortByField = (data, field) => (
   data.sort((first, second) => first[field] > second[field]
         ? 1

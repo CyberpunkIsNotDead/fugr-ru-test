@@ -1,6 +1,6 @@
 import React, { createContext, useReducer } from 'react';
 import { reducer } from './reducer';
-import { limitData, sortByField } from '../pages/MainPage/dataManager';
+import { limitData, sortByField } from './dataManager';
 
 const initialDataState = {
   data: null,
