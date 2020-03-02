@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { DataTable } from '../../components/DataTable';
 import { DataContext } from '../../DataContextWrapper';
 import { START_FETCHING, FETCH_ENTRIES } from '../../DataContextWrapper/actionTypes';
+import { Pagination } from '../../components/Pagination';
 
 export const MainPage = (props) => {
   const {
@@ -65,6 +66,9 @@ export const MainPage = (props) => {
           <li><Link to='/page/2'>2</Link></li>
           <li><Link to='/page/3'>3</Link></li>
         </ul>
+      <Pagination
+        currentPage={props.match.params.page ? props.match.params.page : 1}
+        pagesCount={9} />
       </div>
       {
         checkIfLoading()
