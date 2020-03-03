@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, Fragment, useState } from 'react';
 import { DataContext } from '../../DataContextWrapper';
 import { SORT_ENTRIES } from '../../DataContextWrapper/actionTypes';
 
@@ -32,12 +32,33 @@ export const DataTable = (props) => {
     ))
   );
 
+  const [info, setInfo] = useState(null);
+
+  const showInfo = (item) => {
+    setInfo(item);
+  };
+
+  const renderIfPresent = () => (
+    info
+    ? (
+      <div>
+        <p>Выбран пользователь <b>{`${info.firstName} ${info.lastName}`}</b></p>
+        <p>Описание:</p>
+        <textarea value={info.description} readOnly/>
+        <p>Адрес проживания: <b>{info.address.streetAddress}</b></p>
+        <p>Город: <b>{info.address.city}</b></p>
+        <p>Провинция/штат: <b>{info.address.state}</b></p>
+        <p>Индекс: <b>{info.address.zip}</b></p>
+      </div>
+    ) : null
+  );
+
   const tableRows = () => (
-    props.data.map((e, index) => (
-        <tr key={index}>
+    props.data.map((item, index) => (
+        <tr key={index} onClick={() => {showInfo(item)}}>
           {
             DATA_FIELDS.map((field, index) => (
-              <td key={index}>{e[field]}</td>
+              <td key={index}>{item[field]}</td>
             ))
           }
         </tr>
@@ -46,15 +67,18 @@ export const DataTable = (props) => {
   );
 
   return (
-    <table>
-      <thead>
-        <tr>
-          { tableHead() }
-        </tr>
-      </thead>
-      <tbody>
-        { tableRows() }
-      </tbody>
-    </table>
+    <Fragment>
+      <table>
+        <thead>
+          <tr>
+            { tableHead() }
+          </tr>
+        </thead>
+        <tbody>
+          { tableRows() }
+        </tbody>
+      </table>
+    { renderIfPresent() }
+    </Fragment>
   );
 };
