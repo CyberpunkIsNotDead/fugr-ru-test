@@ -5,24 +5,26 @@ import { SORT_ENTRIES } from '../../DataContextWrapper/actionTypes';
 export const DataTable = (props) => {
 
   const {
-    dataState,
     dispatch,
-    CONFIG: {DATA_FIELDS}
+    CONFIG: {DATA_FIELDS},
+    fields
   } = useContext(DataContext);
 
-  const sortData = (field) => {
+  const sortData = (field, index) => {
     dispatch({
       type: SORT_ENTRIES,
-      field: field,
+      field: field.value,
+      isAscending: field.isAscending
     });
+    fields[index] = {...field, isAscending: !field.isAscending}
   };
 
   const tableHead = () => (
-    DATA_FIELDS.map((field, index) => (
-      <th key={index} onClick={() => {sortData(field)}}>
-        <span>{field}</span>
+    fields.map((field, index) => (
+      <th key={index} onClick={() => {sortData(field, index)}}>
+        <span>{field.value}</span>
         <span>{
-          dataState.ascendingOrder
+          field.isAscending
           ? '▲'
           : '▼'
         }</span>

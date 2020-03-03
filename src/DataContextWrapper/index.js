@@ -11,6 +11,13 @@ const initialDataState = {
   ascendingOrder: false,
 };
 
+const fields = CONFIG.DATA_FIELDS.map(field => (
+  {
+    value: field,
+    isAscending: true,
+  }
+))
+
 export const DataContext = createContext(initialDataState);
 
 export const DataContextWrapper = ({children}) => {
@@ -24,6 +31,7 @@ export const DataContextWrapper = ({children}) => {
         limitData,
         sortByField,
         CONFIG,
+        fields,
       }}
     >
       {children}
