@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment, useContext } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { DataTable } from '../../components/DataTable';
 import { DataContext } from '../../DataContextWrapper';
 import { START_FETCHING, FETCH_ENTRIES } from '../../DataContextWrapper/actionTypes';
@@ -13,9 +13,10 @@ export const MainPage = (props) => {
   } = useContext(DataContext);
   
   // const url = process.env.REACT_APP_FETCH_URL_SMALL;
-  const url = process.env.REACT_APP_FETCH_URL_BIG;
+  const url_big = process.env.REACT_APP_FETCH_URL_BIG;
+  const url_small = process.env.REACT_APP_FETCH_URL_SMALL;
 
-  const fetchData = async () => {
+  const fetchData = async (url) => {
     const response = await fetch(url);
     dispatch({type: START_FETCHING});
   
@@ -31,17 +32,15 @@ export const MainPage = (props) => {
     };
   };
 
-  useEffect(() => {
-    fetchData();
-    // eslint-disable-next-line
-  }, []);
-
   const currentPage = props.match.params.page ? props.match.params.page : 1
 
   const checkIfDataExists = () => (
     dataState.data !== null
     ? (
       <Fragment>
+        <Pagination
+          currentPage={currentPage}
+        />
         <DataTable
           currentPage={props.match.params.page}
           data={
@@ -65,9 +64,8 @@ export const MainPage = (props) => {
   return (
     <>
       <div>
-      <Pagination
-        currentPage={currentPage}
-        />
+        <button onClick={() => fetchData(url_small)}>Small dataset</button>
+        <button onClick={() => fetchData(url_big)}>Big dataset</button>
       </div>
       {
         checkIfLoading()
