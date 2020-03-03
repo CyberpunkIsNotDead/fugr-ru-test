@@ -32,3 +32,22 @@ export const sortByField = (data, field, isAscending) => {
       return sortAscending(data, field);
   };
 };
+
+const isIncludes = (string, subString) => (
+  string.toLowerCase().includes(subString)
+);
+
+const IterateOverObject = (dataObject, string) => (
+  Object.values(dataObject).some(item => {
+    switch (typeof(item)) {
+      case 'string':
+        return isIncludes(item, string);
+      default:
+        return false;
+    }
+  })
+);
+
+export const filterData = (data, string) => (
+  data.filter(item => IterateOverObject(item, string))
+);

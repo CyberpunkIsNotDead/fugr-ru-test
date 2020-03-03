@@ -4,6 +4,7 @@ import { DataContext } from '../../DataContextWrapper';
 import { START_FETCHING, FETCH_ENTRIES } from '../../DataContextWrapper/actionTypes';
 import { Pagination } from '../../components/Pagination';
 import { limitData } from '../../DataContextWrapper/dataManager';
+import { SearchField } from '../../components/SearchField';
 
 export const MainPage = (props) => {
   const {
@@ -35,6 +36,7 @@ export const MainPage = (props) => {
     dataState.data !== null
     ? (
       <Fragment>
+        <SearchField />
         <Pagination
           currentPage={currentPage}
         />
