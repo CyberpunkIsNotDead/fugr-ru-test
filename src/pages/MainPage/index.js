@@ -12,19 +12,16 @@ export const MainPage = (props) => {
     CONFIG: {PAGE_ENTRIES_LIMIT}
   } = useContext(DataContext);
   
-  // const url = process.env.REACT_APP_FETCH_URL_SMALL;
   const url_big = process.env.REACT_APP_FETCH_URL_BIG;
   const url_small = process.env.REACT_APP_FETCH_URL_SMALL;
 
   const fetchData = async (url) => {
-    const response = await fetch(url);
     dispatch({type: START_FETCHING});
+    const response = await fetch(url);
   
     if (response.ok) {
       const json = await response.json();
-      setTimeout(() => {
-        dispatch({type: FETCH_ENTRIES, payload: json});
-      }, 2000 );
+      dispatch({type: FETCH_ENTRIES, payload: json});
     } else {
       throw new Error(
         `Error while data fetching. Server response:${response.status}`
@@ -57,7 +54,7 @@ export const MainPage = (props) => {
 
   const checkIfLoading = () => (
     dataState.loading
-    ? <div>loading...</div>
+    ? <div className="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
     : checkIfDataExists()
   );
 

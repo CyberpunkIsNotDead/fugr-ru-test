@@ -6,8 +6,9 @@ import CONFIG from '../config';
 
 const initialDataState = {
   data: null,
+  requestSent: false,
   loading: false,
-  ascendingOrder: true,
+  ascendingOrder: false,
 };
 
 export const DataContext = createContext(initialDataState);
