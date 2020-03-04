@@ -31,7 +31,7 @@ export const DataFilter = () => {
         data={filtered}
         setCurrentPage={setCurrentPage}
       />
-      {/* <AddForm /> */}
+      <AddForm />
       <DataTable
         currentPage={currentPage}
         data={tableData}
