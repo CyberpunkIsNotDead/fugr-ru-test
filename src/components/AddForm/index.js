@@ -8,6 +8,8 @@ export const AddForm = (props) => {
   const [showForm, setShowForm] = useState(false);
   const initialFormState = CONFIG.DATA_OBJECT;
   const [formState, setFormState] = useState(initialFormState);
+  const [form, setForm] = useState()
+  const [formIsValid, setFormIsValid] = useState(false);
 
   const {dispatch} = useContext(DataContext)
 
@@ -25,9 +27,6 @@ export const AddForm = (props) => {
 
   const handleChange = (type, field, value) => {
     switch (type) {
-      case 'data':
-        setFormState({...formState, [field]: value});
-        break;
       case 'address':
         setFormState({...formState, address: {...formState.address, [field]: value}});
         break;
@@ -36,26 +35,43 @@ export const AddForm = (props) => {
     };
   };
 
+  const formValidation = () => {
+    // console.log(e.currentTarget.elements)
+  }
+
+  const formField = (key, index, type) => {
+    return (
+      <p key={index}>{key}<input type='text' name={key} onChange={e => handleChange(type, key, e.target.value)} /></p>
+    );
+  };
+
+  const formFields = () => {
+    const elements = [];
+
+    Object.entries(CONFIG.DATA_OBJECT).map((item, index) => {
+      const [key, value] = item;
+      if (key === 'address') {
+        Object.entries(value).map((item, index) => {
+          const [key, value] = item
+          elements.push(formField(key, key+index, 'address'));
+        });
+      } else {
+        elements.push(formField(key, index, ''));
+      };
+    });
+    return elements;
+  };
+
+  // arr.every(callback(currentValue[, index[, array]])[, thisArg])
+
   const renderIfPresent = () => (
     showForm
     ? (
       <Fragment>
         <button onClick={handleClick}>Hide</button>
         <form onSubmit={e => handleSubmit(e)}>
-          {
-            CONFIG.DATA_FIELDS.map((field, index) => (
-              <p key={index}>{field}<input type='text' onChange={e => handleChange('data', field, e.target.value)} /></p>
-            ))
-          }
-          {
-            CONFIG.ADDRESS_FIELDS.map((field, index) => (
-              <p key={index+10}>{field}<input type='text' onChange={e => handleChange('address', field, e.target.value)} /></p>
-            ))
-          }
-          {
-            <p key={9000}>{CONFIG.DESCRIPTION_FIELD}<input type='text' onChange={e => handleChange('description', CONFIG.DESCRIPTION_FIELD, e.target.value)} /></p>
-          }
-          <button>Add entry</button>
+          { formFields() }
+          <button disabled={formIsValid}>Add entry</button>
         </form>
       </Fragment>
     ) : (

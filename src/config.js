@@ -29,18 +29,18 @@ const CONFIG = {
   ],
   DESCRIPTION_FIELD: 'description',
   DATA_OBJECT: {
-		id: null,
-		firstName: null,
-		lastName: null,
-		email: null,
-		phone: null,
+		id: '',
+		firstName: '',
+		lastName: '',
+		email: '',
+		phone: '',
 		address: {
-			streetAddress: null,
-			city: null,
-			state: null,
-			zip: null
+			streetAddress: '',
+			city: '',
+			state: '',
+			zip: ''
 		},
-		description: null,
+		description: '',
 	},
   PAGE_ENTRIES_LIMIT: 50,
   FORM_FIELDS: [
