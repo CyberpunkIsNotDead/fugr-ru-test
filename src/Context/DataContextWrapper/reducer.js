@@ -18,7 +18,7 @@ export const reducer = (dataState, action) => {
         data: sortByField(dataState.data, action.field, action.isAscending),
       };
     case ADD_ENTRY:
-      return {...dataState, data: dataState.data.unshift(action.item)};
+      return {...dataState, data: [action.item, ...dataState.data]};
     default:
       return dataState;
   };

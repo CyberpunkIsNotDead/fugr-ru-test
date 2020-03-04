@@ -1,5 +1,7 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useContext } from 'react';
 import CONFIG from '../../config';
+import { DataContext } from '../../Context/DataContextWrapper';
+import { ADD_ENTRY } from '../../Context/DataContextWrapper/actionTypes';
 
 export const AddForm = (props) => {
 
@@ -7,9 +9,14 @@ export const AddForm = (props) => {
   const initialFormState = CONFIG.DATA_OBJECT;
   const [formState, setFormState] = useState(initialFormState);
 
+  const {dispatch} = useContext(DataContext)
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    dispatch({
+      type: ADD_ENTRY,
+      item: formState,
+    });
   };
 
   const handleClick = () => {
@@ -28,8 +35,6 @@ export const AddForm = (props) => {
         setFormState({...formState, [field]: value});
     };
   };
-
-  console.log(formState)
 
   const renderIfPresent = () => (
     showForm
