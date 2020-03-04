@@ -1,9 +1,9 @@
 import React, { useState, useContext, Fragment } from 'react';
 import { DataContext } from '../../Context/DataContextWrapper';
 import { SearchForm } from '../SearchForm';
-import { limitData } from '../../Context/DataContextWrapper/dataManager';
 import { DataTable } from '../DataTable';
 import { Pagination } from '../Pagination';
+import { AddForm } from '../AddForm';
 
 export const DataFilter = (props) => {
   const [filterString, setFilterString] = useState('');
@@ -11,6 +11,7 @@ export const DataFilter = (props) => {
   const {
     dataState: {data},
     filterData,
+    limitData,
     CONFIG: {PAGE_ENTRIES_LIMIT},
   } = useContext(DataContext);
 
@@ -25,6 +26,7 @@ export const DataFilter = (props) => {
         currentPage={props.currentPage}
         data={filtered}
       />
+      <AddForm />
       <DataTable
         currentPage={props.currentPage}
         data={tableData}
