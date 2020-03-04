@@ -1,12 +1,13 @@
-import React, { useState, useContext, Fragment } from 'react';
+import React, { useState, useContext, Fragment, useEffect } from 'react';
 import { DataContext } from '../../Context/DataContextWrapper';
 import { SearchForm } from '../SearchForm';
 import { DataTable } from '../DataTable';
 import { Pagination } from '../Pagination';
 import { AddForm } from '../AddForm';
 
-export const DataFilter = (props) => {
+export const DataFilter = () => {
   const [filterString, setFilterString] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
 
   const {
     dataState: {data},
@@ -16,19 +17,23 @@ export const DataFilter = (props) => {
   } = useContext(DataContext);
 
   const filtered = filterData(data, filterString);
+  const tableData = limitData(filtered, currentPage, PAGE_ENTRIES_LIMIT);
 
-  const tableData = limitData(filtered, props.currentPage, PAGE_ENTRIES_LIMIT)
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filterString]);
 
   return (
     <Fragment>
       <SearchForm setFilterString={setFilterString} />
       <Pagination
-        currentPage={props.currentPage}
+        currentPage={currentPage}
         data={filtered}
+        setCurrentPage={setCurrentPage}
       />
-      <AddForm />
+      {/* <AddForm /> */}
       <DataTable
-        currentPage={props.currentPage}
+        currentPage={currentPage}
         data={tableData}
       />
     </Fragment>
