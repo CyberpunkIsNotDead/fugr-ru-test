@@ -2,6 +2,7 @@ import {
   START_FETCHING,
   FETCH_ENTRIES,
   SORT_ENTRIES,
+  ADD_ENTRY,
 } from './actionTypes'
 import { sortByField } from './dataManager'
 
@@ -12,12 +13,12 @@ export const reducer = (dataState, action) => {
     case FETCH_ENTRIES:
       return {...dataState, data: action.payload, loading: false};
     case SORT_ENTRIES:
-      return (
-        {
-          ...dataState,
-          data: sortByField(dataState.data, action.field, action.isAscending),
-        }
-      );
+      return {
+        ...dataState,
+        data: sortByField(dataState.data, action.field, action.isAscending),
+      };
+    case ADD_ENTRY:
+      return {...dataState, data: dataState.data.unshift(action.item)};
     default:
       return dataState;
   };

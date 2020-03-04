@@ -1,6 +1,6 @@
 import React, { Fragment, useContext } from 'react';
 import { DataContext } from '../../Context/DataContextWrapper';
-import { START_FETCHING, FETCH_ENTRIES } from '../../DataContextWrapper/actionTypes';
+import { START_FETCHING, FETCH_ENTRIES } from '../../Context/DataContextWrapper/actionTypes';
 import { DataFilter } from '../../components/DataFilter';
 
 export const MainPage = (props) => {
