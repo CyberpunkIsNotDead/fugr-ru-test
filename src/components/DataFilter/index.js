@@ -23,6 +23,7 @@ export const DataFilter = (props) => {
       <SearchForm setFilterString={setFilterString} />
       <Pagination
         currentPage={props.currentPage}
+        data={filtered}
       />
       <DataTable
         currentPage={props.currentPage}

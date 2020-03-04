@@ -8,12 +8,11 @@ export const Pagination = (props) => {
   // TODO: fix data slicing in last page, rewrite dirty code
 
   const {
-    dataState: {data},
     CONFIG: {PAGE_ENTRIES_LIMIT}
   } = useContext(DataContext);
 
   const currentPage = props.currentPage;
-  const pagesCount = getPagesCount(data, PAGE_ENTRIES_LIMIT);
+  const pagesCount = getPagesCount(props.data, PAGE_ENTRIES_LIMIT);
 
   const createPagination = () => {
     let pages = [];
