@@ -1,7 +1,7 @@
 import React, { createContext, useReducer } from 'react';
 import { reducer } from './reducer';
 import { limitData, sortByField, filterData } from './dataManager';
-import CONFIG from '../config';
+import CONFIG from '../../config';
 
 
 const initialDataState = {

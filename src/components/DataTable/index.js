@@ -1,6 +1,6 @@
 import React, { useContext, Fragment, useState } from 'react';
-import { DataContext } from '../../DataContextWrapper';
-import { SORT_ENTRIES } from '../../DataContextWrapper/actionTypes';
+import { DataContext } from '../../Context/DataContextWrapper';
+import { SORT_ENTRIES } from '../../Context/DataContextWrapper/actionTypes';
 
 export const DataTable = (props) => {
 

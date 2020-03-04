@@ -1,16 +1,12 @@
 import React, { Fragment, useContext } from 'react';
-import { DataTable } from '../../components/DataTable';
-import { DataContext } from '../../DataContextWrapper';
+import { DataContext } from '../../Context/DataContextWrapper';
 import { START_FETCHING, FETCH_ENTRIES } from '../../DataContextWrapper/actionTypes';
-import { Pagination } from '../../components/Pagination';
-import { limitData } from '../../DataContextWrapper/dataManager';
-import { SearchField } from '../../components/SearchField';
+import { DataFilter } from '../../components/DataFilter';
 
 export const MainPage = (props) => {
   const {
     dataState,
     dispatch,
-    CONFIG: {PAGE_ENTRIES_LIMIT}
   } = useContext(DataContext);
   
   const url_big = process.env.REACT_APP_FETCH_URL_BIG;
@@ -36,20 +32,7 @@ export const MainPage = (props) => {
     dataState.data !== null
     ? (
       <Fragment>
-        <SearchField />
-        <Pagination
-          currentPage={currentPage}
-        />
-        <DataTable
-          currentPage={props.match.params.page}
-          data={
-            limitData(
-              dataState.data,
-              currentPage,
-              PAGE_ENTRIES_LIMIT
-              )
-            }
-        />
+        <DataFilter currentPage={currentPage} />
       </Fragment>
     ) : null
   );

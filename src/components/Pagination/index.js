@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import getPagesCount from './getPagesCount';
-import { DataContext } from '../../DataContextWrapper';
+import { DataContext } from '../../Context/DataContextWrapper';
 
 export const Pagination = (props) => {
 
