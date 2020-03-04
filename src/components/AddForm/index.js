@@ -4,32 +4,51 @@ import CONFIG from '../../config';
 export const AddForm = (props) => {
 
   const [showForm, setShowForm] = useState(false);
+  const initialFormState = CONFIG.DATA_OBJECT;
+  const [formState, setFormState] = useState(initialFormState);
 
-  // CONFIG.FORM_FIELDS
-  // case add entry in reducer
-  const addEntry = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target)
 
   };
-
-  // handle multiple form fields in react (formData?)
-  // Array.unshift() : Adding elements at the front of an Array
 
   const handleClick = () => {
     setShowForm(!showForm);
   };
+
+  const handleChange = (type, field, value) => {
+    switch (type) {
+      case 'data':
+        setFormState({...formState, [field]: value});
+        break;
+      case 'address':
+        setFormState({...formState, address: {...formState.address, [field]: value}});
+        break;
+      default:
+        setFormState({...formState, [field]: value});
+    };
+  };
+
+  console.log(formState)
 
   const renderIfPresent = () => (
     showForm
     ? (
       <Fragment>
         <button onClick={handleClick}>Hide</button>
-        <form onSubmit={e => addEntry(e)}>
+        <form onSubmit={e => handleSubmit(e)}>
           {
-            CONFIG.FORM_FIELDS.map((field, index) => (
-              <p key={index}>{field}<input type='text' /></p>
+            CONFIG.DATA_FIELDS.map((field, index) => (
+              <p key={index}>{field}<input type='text' onChange={e => handleChange('data', field, e.target.value)} /></p>
             ))
+          }
+          {
+            CONFIG.ADDRESS_FIELDS.map((field, index) => (
+              <p key={index+10}>{field}<input type='text' onChange={e => handleChange('address', field, e.target.value)} /></p>
+            ))
+          }
+          {
+            <p key={9000}>{CONFIG.DESCRIPTION_FIELD}<input type='text' onChange={e => handleChange('description', CONFIG.DESCRIPTION_FIELD, e.target.value)} /></p>
           }
           <button>Add entry</button>
         </form>
