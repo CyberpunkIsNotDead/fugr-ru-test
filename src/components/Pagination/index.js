@@ -17,13 +17,13 @@ export const Pagination = (props) => {
       if (num !== currentPage) {
         pages.push(
           <span key={num} onClick={() => {props.setCurrentPage(num)}}>
-            Page {num}
+            {num}
           </span>
         );
       } else {
         pages.push(
           <span className='active' key={num} onClick={() => {props.setCurrentPage(num)}}>
-            Page {num}
+            {num}
           </span>
         );
       };

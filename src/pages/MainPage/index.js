@@ -58,7 +58,7 @@ export const MainPage = (props) => {
 
   return (
     <div className='main-page'>
-      <div>
+      <div className='changer'>
         <button onClick={() => fetchData(url_small)}>Small dataset</button>
         <button onClick={() => fetchData(url_big)}>Big dataset</button>
       </div>

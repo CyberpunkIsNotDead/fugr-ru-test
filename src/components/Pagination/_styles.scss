@@ -1,0 +1,24 @@
+.pagination {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  margin-top: 2em;
+  margin-bottom: 2em;
+
+  span {
+    padding: 5px;
+    background-color: #cfcfcf;
+    color: #fff;
+    margin-left: 0px;
+    margin-right: 0px;
+    cursor: pointer;
+    min-width: 1em;
+    text-align: center;
+
+  }
+
+  span:hover {
+    background-color: #888;
+    transition-duration: 0.4s;
+  }
+}

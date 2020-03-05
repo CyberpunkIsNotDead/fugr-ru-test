@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useContext } from 'react';
+import React, { useState, Fragment, useContext, useEffect } from 'react';
 import CONFIG from '../../config';
 import { DataContext } from '../../Context/DataContextWrapper';
 import { ADD_ENTRY } from '../../Context/DataContextWrapper/actionTypes';
@@ -25,23 +25,20 @@ export const AddForm = (props) => {
   };
 
   const formValidation = () => {
-    let valid = true
-    for (const field in formState) {
-      if ([field] === 'address') {
-        for (const addr_field in formState[field]) {
-          valid = valid && (formState[field][addr_field] !== '')
-        }
-      }
-      valid = valid && (formState[field] !== '');
-      if (!valid)
-      break;
-    };
-    if (valid) {
-      setFormIsValid(valid)
-    } else {
-      setFormIsValid(valid)
-    }
+    console.log(formState)
+    let valid = isObjValid(formState) && isObjValid(formState.address);
+    setFormIsValid(valid);
   };
+
+  const isObjValid = (obj) => {
+    let valid = true
+    for (const value of Object.values(obj))
+      valid = valid && (value !== "");
+    return valid;
+  }
+  
+  useEffect(formValidation);
+
 
   const handleChange = (type, field, value) => {
     formValidation()
@@ -57,7 +54,14 @@ export const AddForm = (props) => {
 
   const formField = (key, index, type) => {
     return (
-      <p key={index}>{key}<input type='text' name={key} onChange={e => handleChange(type, key, e.target.value)} /></p>
+      <p key={index}>
+        <span>{key}</span>
+        <input
+          type='text'
+          name={key}
+          onChange={e => handleChange(type, key, e.target.value)}
+        />
+        </p>
     );
   };
 
@@ -95,7 +99,7 @@ export const AddForm = (props) => {
   );
 
   return (
-    <div>
+    <div className='container'>
       { renderIfPresent() }
     </div>
   )

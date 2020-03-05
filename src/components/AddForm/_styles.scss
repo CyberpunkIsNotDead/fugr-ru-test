@@ -1,0 +1,27 @@
+.container {
+  width: 600px;
+  margin: auto;
+  display: flex;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  flex-direction: column;
+}
+
+.add-form {
+  display: flex;
+  flex-direction: column;
+  
+  p {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    span {
+      flex: 1;
+    }
+
+    input {
+      flex: 1;
+    }
+  }
+}
