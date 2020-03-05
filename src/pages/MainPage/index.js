@@ -59,8 +59,8 @@ export const MainPage = (props) => {
   return (
     <div className='main-page'>
       <div className='changer'>
-        <button onClick={() => fetchData(url_small)}>Small dataset</button>
-        <button onClick={() => fetchData(url_big)}>Big dataset</button>
+        <button onClick={() => fetchData(url_small)}>Маленький набор данных</button>
+        <button onClick={() => fetchData(url_big)}>Большой набор данных</button>
       </div>
       {
         checkIfLoading()

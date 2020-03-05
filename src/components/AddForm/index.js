@@ -87,14 +87,14 @@ export const AddForm = (props) => {
     showForm
     ? (
       <Fragment>
-        <button onClick={handleClick}>Hide</button>
+        <button onClick={handleClick}>Скрыть форму</button>
         <form className='add-form' onSubmit={e => handleSubmit(e)}>
           { formFields() }
-          <button disabled={!formIsValid}>Add entry</button>
+          <button disabled={!formIsValid}>Добавить в таблицу</button>
         </form>
       </Fragment>
     ) : (
-      <button onClick={handleClick}>Show</button>
+      <button onClick={handleClick}>Добавить</button>
     )
   );
 
