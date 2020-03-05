@@ -41,7 +41,7 @@ export const DataTable = (props) => {
   const renderIfPresent = () => (
     info
     ? (
-      <div>
+      <div className='info-container'>
         <p>Выбран пользователь <b>{`${info.firstName} ${info.lastName}`}</b></p>
         <p>Описание:</p>
         <textarea value={info.description} readOnly/>
@@ -68,7 +68,7 @@ export const DataTable = (props) => {
 
   return (
     <Fragment>
-      <table>
+      <table className='data-table'>
         <thead>
           <tr>
             { tableHead() }

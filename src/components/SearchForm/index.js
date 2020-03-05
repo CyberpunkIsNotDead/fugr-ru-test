@@ -15,7 +15,7 @@ export const SearchForm = (props) => {
 
   return (
     <Fragment>
-      <form onSubmit={e => handleSubmit(e)}>
+      <form className='search-form' onSubmit={e => handleSubmit(e)}>
         <input type='text' value={inputValue} onChange={e => handleInput(e.target.value)} />
         <button>Search</button>
       </form>

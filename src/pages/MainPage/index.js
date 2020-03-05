@@ -39,12 +39,25 @@ export const MainPage = (props) => {
 
   const checkIfLoading = () => (
     dataState.loading
-    ? <div className="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    ? (<div className="lds-spinner">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>)
     : checkIfDataExists()
   );
 
   return (
-    <>
+    <div className='main-page'>
       <div>
         <button onClick={() => fetchData(url_small)}>Small dataset</button>
         <button onClick={() => fetchData(url_big)}>Big dataset</button>
@@ -52,6 +65,6 @@ export const MainPage = (props) => {
       {
         checkIfLoading()
       }
-    </>
+    </div>
   )
 };
