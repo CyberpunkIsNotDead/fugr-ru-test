@@ -34,7 +34,7 @@ export const sortByField = (data, field, isAscending) => {
 };
 
 const isIncludes = (string, subString) => (
-  string.toLowerCase().includes(subString)
+  string.toLowerCase().includes(subString.toLowerCase())
 );
 
 const IterateOverObject = (dataObject, string) => (
